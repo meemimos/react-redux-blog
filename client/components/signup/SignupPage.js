@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default class About extends React.Component {
+export class SignupPage extends React.Component {
     render() {
         return(
             <div>
-                <h4>@mimos</h4>
+                <center>Sign up form Coming Soon!</center>
             </div>
         );
     }
