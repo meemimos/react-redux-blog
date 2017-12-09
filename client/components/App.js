@@ -6,7 +6,7 @@ export default class App extends React.Component {
         return(
             <div>
                 <NavigationBar />
-                <div className="ui container" style={{marginTop: '10px'}}>
+                <div className="ui container" style={{marginTop: '50px'}}>
                     {this.props.children}
                 </div>
                 <Footer />
