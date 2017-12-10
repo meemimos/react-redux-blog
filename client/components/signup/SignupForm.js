@@ -1,8 +1,9 @@
 import React from 'react';
 import timezones from '../../data/timezones';
 import map from 'lodash/map';
+import PropTypes from 'prop-types';
 
-export default class SignupForm extends React.Component {
+class SignupForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,7 +24,7 @@ export default class SignupForm extends React.Component {
 
     onSubmit(e) {
         e.preventDefault();
-        console.log(this.state);
+        this.props.userSignupRequest(this.state);
     }
 
     render() {
@@ -33,70 +34,71 @@ export default class SignupForm extends React.Component {
         );
 
         return(
-                <div className="ui centered grid">
-                    <div className="six wide tablet eight wide computer column">
-                        <h3 className="">Join Our Community!</h3>
-                        <form className="ui form" onSubmit={this.onSubmit}>
-                            <div className="field">
-                                <label>Username</label>
-                                <input
-                                    onChange={this.onChange} 
-                                    value={this.state.username}
-                                    type="text" 
-                                    name="username" 
-                                    placeholder="First Name" 
-                                />
-                            </div>
-                            <div className="field">
-                                <label>Email</label>
-                                <input
-                                    onChange={this.onChange} 
-                                    value={this.state.email}
-                                    type="text"
-                                    name="email" 
-                                    placeholder="Email" 
-                                />
-                            </div>
-                            <div className="field">
-                                <label>Password</label>
-                                <input
-                                    onChange={this.onChange} 
-                                    value={this.state.password}
-                                    type="password" 
-                                    name="password" 
-                                    placeholder="Password" 
-                                />
-                            </div>
-                            <div className="field">
-                                <label>Password Confirmation</label>
-                                <input
-                                    onChange={this.onChange} 
-                                    value={this.state.passwordConfirmation}
-                                    type="password" 
-                                    name="passwordConfirmation" 
-                                    placeholder="Password Confirmation" 
-                                />
-                            </div>
-                            <div className="field">
-                                <label>Timezone</label>
-                                <select 
-                                    className="ui dropdown"
-                                    name= "timezone"
-                                    onChange= {this.onChange}
-                                    value= {this.state.timezone}
-                                >
-                                    <option value="" disabled>Choose Your Timezone</option>
-                                    {options}
-                                </select>
-                            </div>
-                            <div>
-                                <button className="fluid ui blue button">
-                                    Sign up
-                                </button>    
-                            </div>
-                        </form>
-                    </div>
+            <form className="ui form" onSubmit={this.onSubmit}>
+                <div className="field">
+                    <label>Username</label>
+                    <input
+                        onChange={this.onChange} 
+                        value={this.state.username}
+                        type="text" 
+                        name="username" 
+                        placeholder="First Name" 
+                    />
                 </div>
+                <div className="field">
+                    <label>Email</label>
+                    <input
+                        onChange={this.onChange} 
+                        value={this.state.email}
+                        type="text"
+                        name="email" 
+                        placeholder="Email" 
+                    />
+                </div>
+                <div className="field">
+                    <label>Password</label>
+                    <input
+                        onChange={this.onChange} 
+                        value={this.state.password}
+                        type="password" 
+                        name="password" 
+                        placeholder="Password" 
+                    />
+                </div>
+                <div className="field">
+                    <label>Password Confirmation</label>
+                    <input
+                        onChange={this.onChange} 
+                        value={this.state.passwordConfirmation}
+                        type="password" 
+                        name="passwordConfirmation" 
+                        placeholder="Password Confirmation" 
+                    />
+                </div>
+                <div className="field">
+                    <label>Timezone</label>
+                    <select 
+                        className="ui dropdown"
+                        name= "timezone"
+                        onChange= {this.onChange}
+                        value= {this.state.timezone}
+                    >
+                        <option value="" disabled>Choose Your Timezone</option>
+                        {options}
+                    </select>
+                </div>
+                <div>
+                    <button className="fluid ui blue button">
+                        Sign up
+                    </button>    
+                </div>
+            </form>
         );
     }
 }
+
+SignupForm.propTypes = {
+    userSignupRequest: PropTypes.func.isRequired
+}
+
+export default SignupForm;
