@@ -7,7 +7,6 @@ import { userSignupRequest } from '../../actions/SignupActions';
 class SignupPage extends React.Component {
     render() {
         const { userSignupRequest } = this.props;
-        console.log("SignupPage");
         return(
             <div className="ui centered grid">
                 <div className="six wide tablet eight wide computer column">
@@ -18,7 +17,6 @@ class SignupPage extends React.Component {
         );
     }
 }
-
 
 SignupPage.propTypes = {
     userSignupRequest: PropTypes.func.isRequired
