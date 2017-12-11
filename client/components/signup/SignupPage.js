@@ -10,7 +10,7 @@ class SignupPage extends React.Component {
         return(
             <div className="ui centered grid">
                 <div className="six wide tablet eight wide computer column">
-                    <h3 className="">Join Our Community!</h3>
+                    <h2 className="">Join Our Community!</h2>
                     <SignupForm userSignupRequest={userSignupRequest}/>
                 </div>
             </div>
