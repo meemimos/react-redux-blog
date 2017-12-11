@@ -3,6 +3,8 @@ import timezones from '../../data/timezones';
 import map from 'lodash/map';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import validateInput from '../../../server/shared/validations/signup';
+import TextFieldGroup from '../common/TextFieldGroup';
 
 class SignupForm extends React.Component {
     constructor(props) {
@@ -25,13 +27,26 @@ class SignupForm extends React.Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
+    isValid() {
+        const { errors, isValid } = validateInput(this.state);
+
+        if (!isValid) {
+            this.setState({ errors });
+        }
+
+        return isValid;
+    }
+
     onSubmit(e) {
         e.preventDefault();
-        this.setState({ errors: {}, isLoading: true });
-        this.props.userSignupRequest(this.state).then(
-            () => {},
-            ({ data }) => this.setState({ errors: data, isLoading: false })
-        );
+
+        if (this.isValid()) {
+            this.setState({ errors: {}, isLoading: true });
+            this.props.userSignupRequest(this.state).then(
+                () => {},
+                ({ data }) => this.setState({ errors: data, isLoading: false })
+            );
+        }
     }
 
     render() {
@@ -42,50 +57,37 @@ class SignupForm extends React.Component {
 
         return(
             <form className="ui form" onSubmit={this.onSubmit}>
-                <div className={classnames("field", { 'error': errors.username })}>
-                    <label>Username</label>
-                    <input
-                        onChange={this.onChange} 
-                        value={this.state.username}
-                        type="text" 
-                        name="username" 
-                        placeholder="First Name" 
-                    />
-                    {errors.username && <p style={{color: "#9f3a38", fontSize: "12px"}}>{errors.username}</p>}
-                </div>
-                <div className={classnames("field", { 'error': errors.email })}>                
-                    <label>Email</label>
-                    <input
-                        onChange={this.onChange} 
-                        value={this.state.email}
-                        type="text"
-                        name="email" 
-                        placeholder="Email" 
-                    />
-                    {errors.email && <p style={{color: "#9f3a38", fontSize: "12px"}}>{errors.email}</p>}                    
-                </div>
-                <div className={classnames("field", { 'error': errors.password })}>                
-                    <label>Password</label>
-                    <input
-                        onChange={this.onChange} 
-                        value={this.state.password}
-                        type="password" 
-                        name="password" 
-                        placeholder="Password" 
-                    />
-                    {errors.password && <p style={{color: "#9f3a38", fontSize: "12px"}}>{errors.password}</p>}                    
-                </div>
-                <div className={classnames("field", { 'error': errors.passwordConfirmation })}>                
-                    <label>Password Confirmation</label>
-                    <input
-                        onChange={this.onChange} 
-                        value={this.state.passwordConfirmation}
-                        type="password" 
-                        name="passwordConfirmation" 
-                        placeholder="Password Confirmation" 
-                    />
-                    {errors.passwordConfirmation && <p style={{color: "#9f3a38", fontSize: "12px"}}>{errors.passwordConfirmation}</p>}
-                </div>
+                <TextFieldGroup 
+                    error={errors.username}
+                    label={"Username"}
+                    onChange={this.onChange}
+                    value={this.state.username}
+                    field="username"
+                />
+                <TextFieldGroup 
+                    error={errors.email}
+                    label={"Email"}
+                    onChange={this.onChange}
+                    value={this.state.email}
+                    field="email"
+                />
+                <TextFieldGroup 
+                    error={errors.password}
+                    label={"Password"}
+                    type="password"
+                    onChange={this.onChange}
+                    value={this.state.password}
+                    field="password"
+                />
+                <TextFieldGroup 
+                    error={errors.passwordConfirmation}
+                    label={"Password Confirmation"}
+                    type="password"
+                    onChange={this.onChange}
+                    value={this.state.passwordConfirmation}
+                    field="passwordConfirmation"
+                />
+                
                 <div className={classnames("field", { 'error': errors.timezone })}>                
                     <label>Timezone</label>
                     <select 
